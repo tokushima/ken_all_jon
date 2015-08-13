@@ -17,19 +17,20 @@ foreach(explode(PHP_EOL,$src) as $line){
 		
 		$address1 = str_replace(' ','',$address1);
 		
+		$address2 = preg_replace('/\(.+\)/','', $address2);
+		$address2 = preg_replace('/\(.*$/','',$address2);
+		$address2 = preg_replace('/^.*\).*$/','',$address2);
+
 		if($address2 == '以下に掲載がない場合'){
 			$address2 = '';
 		}else if(strpos($address2,'次に番地がくる場合') !== false){
 			$address2 = '';
 		}else if(strpos($address2,'一円') !== false){
 			$address2 = str_replace('一円','',$address2);
-		}else if(strpos($address2,'、') !== false || strpos($address2,')') !== false){
+		}else if(strpos($address2,'、') !== false){
 			$address2 = '';
 		}
-		$address2 = preg_replace('/^(.+)\(.+$/','\\1',$address2);
-		$address2 = preg_replace('/^.*[0-9].*$/','',$address2);
-		$address2 = str_replace('(','',$address2);
-		
+
 		if(!isset($addr[$zip1][$zip2]['city'])){
 			$addr[$zip1][$zip2]['city'] = [$state,$address1];
 		}
@@ -40,13 +41,12 @@ foreach(explode(PHP_EOL,$src) as $line){
 		}
 	}
 }
+
 if(!is_dir($out_dir)){
 	mkdir($out_dir);
 }
 foreach($addr as $k1 => $v1){
-	foreach($v1 as $k2 => $v2){
-		ksort($v2['addr']);
-		
+	foreach($v1 as $k2 => $v2){		
 		if(!is_dir($out_dir.'/'.$k1)){
 			mkdir($out_dir.'/'.$k1);
 		}
