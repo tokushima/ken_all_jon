@@ -2,21 +2,21 @@
 <head>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>	
 	<script type="text/javascript">
-		function get_zip(frm){
-			zip_url = "./zip/" + frm.zip.value.slice(0,3) + "/" + frm.zip.value.slice(3,5) + ".json";
+		function zip2addr(frm){
+			zip1 = frm.zip.value.slice(0,3);
+			zip2 = frm.zip.value.slice(3,5);
 			zip3 = frm.zip.value.slice(5,7);
 			
 			$.ajax({
 				type: 'GET',
-				url: zip_url,
+				url: "./zip/" + zip1 + "/" + zip2 + ".json",
 				dataType: 'json',
-				 cache: false,
+				cache: false,
 				success: function(json){
 					city = json["city"];
-					address_list = json["addr"];
+					addr = json["addr"];
+					address2 = addr[zip3];
 					
-					address2 = address_list[zip3];
-console.log(address2);
 					if($.isArray(address2)){
 						frm.state.value = address2[0];
 						frm.address1.value = address2[1];
@@ -37,9 +37,8 @@ console.log(address2);
 <body>
 <form>
 	<p>
-		<input type="text" name="zip" /><input type="button" value="get" onclick="get_zip(this.form)" />
+		<input type="text" name="zip" /><input type="button" value="get" onclick="zip2addr(this.form)" />
 	</p>
-	
 	<p>
 		<input type="text" id="state" /><br />
 		<input type="text" id="address1" /><br />

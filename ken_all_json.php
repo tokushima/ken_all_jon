@@ -1,7 +1,8 @@
 <?php
+$in_file = 'KEN_ALL_ROME.CSV';
 $out_dir = 'zip';
 
-$src = mb_convert_encoding(file_get_contents('KEN_ALL_ROME.CSV'),'UTF-8','SJIS');
+$src = mb_convert_encoding(file_get_contents($in_file),'UTF-8','SJIS');
 $src = mb_convert_kana($src,'as');
 $src = str_replace(['（','）'],['(',')'],$src);
 $src = str_replace(' ','',$src);
