@@ -8,7 +8,7 @@
 
 http://www.post.japanpost.jp/zipcode/dl/roman-zip.html
 
-## Sample
+## 使い方
 ```
 <html>
 <head>
