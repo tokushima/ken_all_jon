@@ -1,6 +1,10 @@
 # Ken_all_Json
 
-郵便局の住所の郵便番号（ローマ字・zip形式）を分割してjsonにしたファイルを生成します。
+郵便局の住所の郵便番号（ローマ字・zip形式）を分割してjsonにしたファイル(〒1-3桁/〒4-5桁.json)を生成します。
+
+郵便番号が重複していた場合、データ上最後の住所で上書きされます。
+
+上書きされた住所はoverwrite.jsonに書き出されます。
 
 http://www.post.japanpost.jp/zipcode/dl/roman-zip.html
 
