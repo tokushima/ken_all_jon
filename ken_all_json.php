@@ -1,10 +1,32 @@
 <?php
-$out_dir = 'zip';
+$in_dir = getcwd().'/in';
+$out_dir = getcwd().'/out';
 
-$src = mb_convert_encoding(file_get_contents('http://www.post.japanpost.jp/zipcode/dl/roman/ken_all_rome.zip'),'UTF-8','SJIS');
+
+ini_set('memory_limit','-1');
+
+if(!is_dir($in_dir)){
+	mkdir($in_dir,0777);
+}
+file_put_contents($in_dir.'/ken_all_rome.zip',file_get_contents('http://www.post.japanpost.jp/zipcode/dl/roman/ken_all_rome.zip'));
+
+$zip = new \ZipArchive();
+$zip->open($in_dir.'/ken_all_rome.zip');
+$zip->extractTo($in_dir);
+$zip->close();
+unlink($in_dir.'/ken_all_rome.zip');
+
+$src = mb_convert_encoding(file_get_contents($in_dir.'/KEN_ALL_ROME.CSV'),'UTF-8','SJIS');
 $src = mb_convert_kana($src,'as');
 $src = str_replace(['（','）'],['(',')'],$src);
 $src = str_replace(' ','',$src);
+$src = str_replace('"','',$src);
+unlink($in_dir.'/KEN_ALL_ROME.CSV');
+rmdir($in_dir);
+
+if(!is_dir($out_dir)){
+	mkdir($out_dir);
+}
 
 $overwrite_zip = [];
 $addr = [];
@@ -58,15 +80,16 @@ foreach(explode(PHP_EOL,$src) as $line){
 }
 
 $output_cnt = 0;
-if(!is_dir($out_dir)){
-	mkdir($out_dir);
+$zip_out_dir = $out_dir.'/zip';
+if(!is_dir($zip_out_dir)){
+	mkdir($zip_out_dir);
 }
 foreach($addr as $k1 => $v1){
 	foreach($v1 as $k2 => $v2){
-		if(!is_dir($out_dir.'/'.$k1)){
-			mkdir($out_dir.'/'.$k1);
+		if(!is_dir($zip_out_dir.'/'.$k1)){
+			mkdir($zip_out_dir.'/'.$k1);
 		}
-		file_put_contents($out_dir.'/'.$k1.'/'.$k2.'.json',json_encode($v2));
+		file_put_contents($zip_out_dir.'/'.$k1.'/'.$k2.'.json',json_encode($v2));
 		$output_cnt++;
 	}
 }
@@ -74,7 +97,7 @@ foreach($addr as $k1 => $v1){
 print('Written '.$output_cnt.' files.'.PHP_EOL);
 
 if(!empty($overwrite_zip)){
-	file_put_contents('overwrite.json',json_encode($overwrite_zip));
+	file_put_contents($out_dir.'/overwrite.json',json_encode($overwrite_zip));
 	print('Written overwrite.json'.PHP_EOL);
 	print('Overwrite zipcode: '.sizeof($overwrite_zip).'/'.$cnt.PHP_EOL);
 }

@@ -9,7 +9,7 @@
 			
 			$.ajax({
 				type: 'GET',
-				url: "./zip/" + zip1 + "/" + zip2 + ".json",
+				url: "./out/zip/" + zip1 + "/" + zip2 + ".json",
 				dataType: 'json',
 				cache: false,
 				success: function(json){
@@ -27,7 +27,8 @@
 						frm.address2.value = address2;
 					}
 				},
-				error:function(data){					  
+				error:function(data){
+					alert('not found');
 					console.log(data);
 				}
 			});
@@ -35,14 +36,14 @@
 	</script>
 </head>
 <body>
-<form>
+<form onsubmit="zip2addr(this); return false;">
 	<p>
-		<input type="text" name="zip" /><input type="button" value="get" onclick="zip2addr(this.form)" />
+		<input type="text" name="zip" placeholder="0000000" /><input type="submit" value="get" />
 	</p>
 	<p>
-		<input type="text" id="state" /><br />
-		<input type="text" id="address1" /><br />
-		<input type="text" id="address2" /><br />
+		<input type="text" id="state" placeholder="state" /><br />
+		<input type="text" id="address1" placeholder="address1" /><br />
+		<input type="text" id="address2" placeholder="address2" /><br />
 	</p>
 </form>
 </body>

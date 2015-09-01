@@ -8,7 +8,13 @@
 
 http://www.post.japanpost.jp/zipcode/dl/roman-zip.html
 
-## 使い方
+## 書き出し
+```
+php ken_all_json.php
+```
+
+
+## 使い方 ( sample.html )
 ```
 <html>
 <head>
@@ -21,7 +27,7 @@ http://www.post.japanpost.jp/zipcode/dl/roman-zip.html
 			
 			$.ajax({
 				type: 'GET',
-				url: "./zip/" + zip1 + "/" + zip2 + ".json",
+				url: "./out/zip/" + zip1 + "/" + zip2 + ".json",
 				dataType: 'json',
 				cache: false,
 				success: function(json){
