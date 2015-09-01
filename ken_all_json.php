@@ -1,8 +1,7 @@
 <?php
-$in_file = 'KEN_ALL_ROME.CSV';
 $out_dir = 'zip';
 
-$src = mb_convert_encoding(file_get_contents($in_file),'UTF-8','SJIS');
+$src = mb_convert_encoding(file_get_contents('http://www.post.japanpost.jp/zipcode/dl/roman/ken_all_rome.zip'),'UTF-8','SJIS');
 $src = mb_convert_kana($src,'as');
 $src = str_replace(['（','）'],['(',')'],$src);
 $src = str_replace(' ','',$src);
