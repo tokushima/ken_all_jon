@@ -71,20 +71,20 @@ foreach(explode(PHP_EOL,$src) as $line){
 			$address2 = '';
 		}
 		
-		if(!isset($addr[$zip1][$zip2]['city'])){
-			$addr[$zip1][$zip2]['city'] = [$state,$address1];
+		if(!isset($addr[$zip1][$zip2]['prefecture'])){
+			$addr[$zip1][$zip2]['prefecture'] = [$state,$address1];
 		}		
-		if(implode('',$addr[$zip1][$zip2]['city']) != $state.$address1){
+		if(implode('',$addr[$zip1][$zip2]['prefecture']) != $state.$address1){
 			$address2 = [$state,$address1,$address2];
 		}
 		
 		if(isset($addr[$zip1][$zip2]['addr'][$zip3])){
-			if($addr[$zip1][$zip2]['city'] != [$state,$address1] || $addr[$zip1][$zip2]['addr'][$zip3] != $address2){
+			if($addr[$zip1][$zip2]['prefecture'] != [$state,$address1] || $addr[$zip1][$zip2]['addr'][$zip3] != $address2){
 				$overwrite_zip[] = array_merge(
 					[$zip],
 					(is_array($addr[$zip1][$zip2]['addr'][$zip3]) ?
 						$addr[$zip1][$zip2]['addr'][$zip3] :
-						array_merge($addr[$zip1][$zip2]['city'],[$addr[$zip1][$zip2]['addr'][$zip3]])
+						array_merge($addr[$zip1][$zip2]['prefecture'],[$addr[$zip1][$zip2]['addr'][$zip3]])
 					)
 				);
 				$zipcnt--;
