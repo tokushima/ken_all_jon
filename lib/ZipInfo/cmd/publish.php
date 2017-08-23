@@ -140,6 +140,6 @@ foreach($addr as $k1 => $v1){
 	}
 }
 
-print(sprintf('%d files',$output_cnt));
+print(sprintf('%d files',$output_cnt).PHP_EOL);
 
 
