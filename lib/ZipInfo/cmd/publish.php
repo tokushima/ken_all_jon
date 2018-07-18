@@ -6,7 +6,7 @@
  */
 $out_dir = $out;
 $work_dir = $work;
-$ken_all_url = 'http://www.post.japanpost.jp/zipcode/dl/roman/ken_all_rome.zip';
+$ken_all_url = 'https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip';
 $jigyosyo_url = 'http://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip';
 
 if(empty($work)){
@@ -44,8 +44,7 @@ $download_func = function($url,$csv_filename) use($work_dir){
 	return $src;
 };
 $parse_ken_all_func = function($line){
-// 	list(,,$zip,,,,$pref,$city,$area) = explode(',',$line);
-	list($zip,$pref,$city,$area) = explode(',',$line); 
+ 	list(,,$zip,,,,$pref,$city,$area) = explode(',',$line);
 	$facility = '';
 	
 	if(strpos($pref,'　') !== false){
